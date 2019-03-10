@@ -222,7 +222,8 @@
         'padding': '4px 8px',
       }),
       footnotes: COPY(BASE_BLOCK_STYLE, {
-        'margin': '10px 10px'
+        'margin': '10px 10px',
+        'font-size': '14px'
       }),
       footnote: COPY(BASE_STYLE, {
         'font-size': '12px',
@@ -246,9 +247,9 @@
     var buildFootnotes = function () {
       var footnoteArray = footnotes.map(function (x) {
         if (x[1] === x[2]) {
-          return '<code style="font-size: 80%">[' + x[0] + ']</code>: <i>'  + x[1] +'</i><br/>'
+          return '<code style="font-size: 90%; opacity: 0.6;">[' + x[0] + ']</code>: <i>'  + x[1] +'</i><br/>'
         }
-        return '<code style="font-size: 80%">[' + x[0] + ']</code> ' + x[1] + ': <i>'  + x[2] +'</i><br/>'
+        return '<code style="font-size: 90%; opacity: 0.6;">[' + x[0] + ']</code> ' + x[1] + ': <i>'  + x[2] +'</i><br/>'
       })
       return '<h3 ' + S('h3') + '>References</h3><p ' + S('footnotes') + '>'  + footnoteArray.join('\n') + '</p>'
     }
