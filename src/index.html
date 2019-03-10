@@ -141,6 +141,9 @@
       'background-clip': 'text',
       '-webkit-text-fill-color': 'transparent'
     })
+    var EM_STYLE = COPY(BASE_STYLE, {
+      'color': '#ff3502'
+    })
     var styleMapping = {
       h2: COPY(BASE_BLOCK_STYLE, {
         'font-size': '140%',
@@ -204,8 +207,8 @@
         'padding': '3px 5px',
         'border-radius': '2px',
       }),
-      link: COPY(GRADIENT_STYLE, {}),
-      strong: COPY(GRADIENT_STYLE, {}),
+      link: COPY(EM_STYLE, {}),
+      strong: COPY(EM_STYLE, {}),
       table: COPY(BASE_BLOCK_STYLE, {
         'border-collapse': 'collapse',  
         'margin': '20px 0',
