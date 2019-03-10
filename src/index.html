@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>微信公众号文字格式化编辑器</title>
+  <title>微信公众号格式化编辑器</title>
   <link rel="shortcut icon" href="favicon.png"> 
   <link rel="shortcut icon" href="favicon.png"> 
   <link rel="apple-touch-icon-precomposed" href="favicon.png">
@@ -124,7 +124,7 @@
 
     var FONT_FAMILY = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
     var FONT_FAMILY_MONO = '\'Operator Mono\', Consolas, Monaco, Menlo, monospace'
-    var FONT_FAMILY_SERIF = "Optima-Regular, PingFangTC-light, PingFangSC-light, PingFang, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+    var FONT_FAMILY_SERIF = "Optima-Regular, PingFangSC-light, PingFangTC-light, PingFang, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
     var BASE_STYLE = {
       'font-family': FONT_FAMILY_SERIF, 'text-align': 'left',
       'color': '#3f3f3f',
@@ -132,7 +132,7 @@
       'font-size': '16px',
     }
     var BASE_BLOCK_STYLE = COPY(BASE_STYLE, {
-      'margin': '16px 10px'
+      'margin': '20px 10px'
     })
     var GRADIENT_STYLE = COPY(BASE_STYLE, {
       'background-image': '-webkit-linear-gradient(left,#ff3502,#E67300)',
@@ -150,12 +150,12 @@
         'text-align': 'center',
         'font-weight': 'normal',
         'text-align': 'center',
-        'margin': '60px 10px 30px 10px'
+        'margin': '80px 10px 40px 10px'
       }),
       h3: COPY(BASE_BLOCK_STYLE, {
         'font-weight': 'bold',
         'font-size': '120%',
-        'margin': '20px 10px 20px 10px'
+        'margin': '40px 10px 20px 10px'
       }),
       p: COPY(BASE_BLOCK_STYLE, {
         'margin': '10px 10px'
@@ -182,7 +182,7 @@
       image: COPY(BASE_BLOCK_STYLE, {
         'border-radius': '4px',
         'display': 'block',
-        'margin': '0 auto',
+        'margin': '20px auto',
         'width': '100%',
       }),
       image_org: COPY(BASE_BLOCK_STYLE, {
@@ -190,14 +190,17 @@
         'display': 'block',
       }),
       ol: COPY(BASE_BLOCK_STYLE, {
-        'padding-left': '10px'
+        'margin-left': '0px',
+        'padding-left': '0px'
       }),
       ul: COPY(BASE_BLOCK_STYLE, {
-        'padding-left': '10px',
+        'margin-left': '0px',
+        'padding-left': '0px',
         'list-style': 'circle',
       }),
       listitem: COPY(BASE_STYLE, {
-        'text-indent': '-20px'
+        'text-indent': '-20px',
+        'margin': '10px 10px',
       }),
       codespan: COPY(BASE_STYLE, {
         'font-size': '90%',
