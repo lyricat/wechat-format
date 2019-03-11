@@ -6,16 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>微信公众号格式化编辑器</title>
   <link rel="shortcut icon" href="favicon.png"> 
-  <link rel="shortcut icon" href="favicon.png"> 
   <link rel="apple-touch-icon-precomposed" href="favicon.png">
-  <link rel="stylesheet" href="vue-eleui.css">
+  <link rel="stylesheet" href="assets/css/vue-eleui.css">
   <link rel="stylesheet" href="codemirror/codemirror.css">
   <link rel="stylesheet" href="codemirror/theme/base16-light.css">
   <link rel="stylesheet" href="codemirror/theme/duotone-light.css">
   <link rel="stylesheet" href="codemirror/theme/monokai.css">
-  <script src="marked.min.js"></script>
-  <script src="vue.js"></script>
-  <script src="vue-eleui.js"></script>
+  <script src="assets/scripts/marked.min.js"></script>
+  <script src="assets/scripts/clipboard.min.js"></script>
+  <script src="assets/scripts/vue.js"></script>
+  <script src="assets/scripts/vue-eleui.js"></script>
   <script src="codemirror/codemirror.js"></script>
   <script src="codemirror/mode/markdown/markdown.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4178606-10"></script>
@@ -27,7 +27,7 @@
   </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    a { color: inherit; text-decoration: none; }
+    a { text-decoration: none; color: #ff3502 }
     input, button, textarea { font-family: inherit; }
     h1, h2, h3, h4, h5, h6 { font-weight: normal; }
     em { font-style: normal !important; }
@@ -104,9 +104,9 @@
           </textarea>
         </section>
         <section v-show="paneStats[1]" class="main-section">
-          <div class="hint">全选下面的文字，在公众号编辑器粘贴</div>
+          <div class="hint">全选复制或<a href="#" @click="copy" class="copy-button">点此复制</a>，然后在公众号编辑器粘贴</div>
           <div class="preview" contenteditable="true">
-            <div v-html="output">
+            <div id="output" v-html="output">
             </div>
           </div>
         </section>
@@ -123,7 +123,7 @@
     var COPY = function (base, extend) { return Object.assign({}, base, extend)}
 
     var FONT_FAMILY = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
-    var FONT_FAMILY_MONO = '\'Operator Mono\', Consolas, Monaco, Menlo, monospace'
+    var FONT_FAMILY_MONO = "Operator Mono, Consolas, Monaco, Menlo, monospace"
     var FONT_FAMILY_SERIF = "Optima-Regular, PingFangSC-light, PingFangTC-light, PingFang, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
     var BASE_STYLE = {
       'font-family': FONT_FAMILY_SERIF, 'text-align': 'left',
@@ -319,7 +319,7 @@
             + '### 关于我\n\n'
             + '我是 Lyric。如果你喜欢我的工具，可以：\n\n'
             + '- 关注我的公众号 `imlyricw`\n'
-            + '  ![歌词经理的公众号](qr.jpg)\n'
+            + '  ![歌词经理的公众号](assets/images/qr.jpg)\n'
             + '- 关注我的博客 https://lyric.im\n'
             + '- 关注本工具的 Github https://github.com/lyricat/wechat-format\n'
             + '\n\n',
@@ -355,6 +355,8 @@
             + '又一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。 严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
         }
       },
+      mounted () {
+      },
       methods: {
         renderWeChat: function (source) {
           footnotes = []
@@ -378,6 +380,31 @@
             ENV_USE_REFERENCES = false
             ENV_STETCH_IMAGE = false
             this.aboutOutput = this.renderWeChat(this.aboutSource)
+          }
+        },
+        copy: function () {
+          var clipboardDiv = document.getElementById('output')
+          clipboardDiv.focus();
+          window.getSelection().removeAllRanges();  
+          var range = document.createRange(); 
+          range.setStartBefore(clipboardDiv.firstChild);
+          range.setEndAfter(clipboardDiv.lastChild);
+          window.getSelection().addRange(range);  
+
+          try {
+            if (document.execCommand('copy')) {
+              this.$message({
+                message: '已复制到剪贴板', type: 'success'
+              })
+            } else {
+              this.$message({
+                message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
+              })
+            }
+          } catch (err) {
+            this.$message({
+              message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
+            })
           }
         }
       }
