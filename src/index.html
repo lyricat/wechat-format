@@ -15,6 +15,7 @@
   <script src="assets/scripts/marked.min.js"></script>
   <script src="assets/scripts/vue.js"></script>
   <script src="assets/scripts/vue-eleui.js"></script>
+  <script src="assets/scripts/FuriganaMD.js"></script>
   <script src="codemirror/codemirror.js"></script>
   <script src="codemirror/mode/markdown/markdown.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4178606-10"></script>
@@ -258,6 +259,7 @@
     }
     // renderer
     var renderer = new marked.Renderer()
+    FuriganaMD.register(renderer);
     renderer.heading = function (text, level) {
       if (level < 3) {
         return '<h2 ' + S('h2') + '>' + text + '</h2>'
@@ -352,7 +354,25 @@
             + '一段代码 `{code: 0}`.\n\n'
             + '> 引用文字 text\n> -- 鲁迅说的\n\n'
             + '一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。 严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
-            + '又一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。 严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
+            + '又一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
+            + '## 注音符号\n\n'
+            + ' [W3C定义](http://www.w3.org/TR/ruby/)\n\n'
+            + '支持日语注音假名，小夜時雨【さ・よ・しぐれ】 和 汉语拼音 上海【Shàng・hǎi】\n\n'
+            + '用法有以下几种：\n\n'
+            + '```\n'
+            + '世界【せかい】\n'
+            + '世界{せかい}\n\n'
+            + '```\n\n'
+            + '世界{せかい}\n\n'
+            + '```\n'
+            + '小夜時雨【さ・よ・しぐれ】\n\n'
+            + '```\n\n'
+            + '小夜時雨【さ・よ・しぐれ】\n\n'
+            + '```\n'
+            + '食べる【たべる】\n'
+            + '食べる{たべる}\n\n'
+            + '```\n\n'
+            + '食べる{たべる}\n\n english【英文】 will not translated{fan yi}'
         }
       },
       mounted () {
