@@ -34,6 +34,7 @@
       height: 100%;
       font-family: 'PingFangSC-light', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
     }
+    .el-message__icon { display: none }
     .container {
       height: 100%;
       display: flex;
@@ -393,16 +394,16 @@
           try {
             if (document.execCommand('copy')) {
               this.$message({
-                message: '已复制到剪贴板', type: 'success'
+                message: '已复制到剪贴板', type: 'success', iconClass: '', duration: 0
               })
             } else {
               this.$message({
-                message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
+                message: '未能复制到剪贴板，请全选后右键复制', type: 'warning', iconClass: ''
               })
             }
           } catch (err) {
             this.$message({
-              message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
+              message: '未能复制到剪贴板，请全选后右键复制', type: 'warning', iconClass: ''
             })
           }
         }
