@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="codemirror/theme/base16-light.css">
   <link rel="stylesheet" href="codemirror/theme/duotone-light.css">
   <link rel="stylesheet" href="codemirror/theme/monokai.css">
+  <script src="assets/scripts/axios.min.js"></script>
   <script src="assets/scripts/marked.min.js"></script>
   <script src="assets/scripts/vue.js"></script>
   <script src="assets/scripts/vue-eleui.js"></script>
@@ -33,7 +34,7 @@
     em { font-style: normal !important; }
     html, body {
       height: 100%;
-      font-family: 'PingFangSC-light', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+      font-family: 'PingFang SC', BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
     }
     .el-message__icon { display: none }
     .container {
@@ -70,7 +71,6 @@
       width: 375px;
       padding: 20px;
       font-size: 16px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       outline: 1px solid #ddd;
     }
     .preview ul, .preview ol {
@@ -82,6 +82,7 @@
       font-size: 16px;
       padding: 20px;
       width: 100%;
+      font-family: 'PingFang SC', BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
     }
   </style>
 </head>
@@ -327,55 +328,16 @@
             + '\n\n',
           aboutOutput: '',
           output: '',
-          source: 
-              '## A Title 2\n\n### A title 3\n\na paragraphg\n\n- list item A AVeryLongMetho oooooooooooo ooooooooo  ooooooooo ooooooooooooood AVeryLongMe thoooo oooooo ooo ooooo ooooooo oooooooooooo  ooooooo od\n- list item 2\n\n'
-            + 'a text with [a link](https://google.com) and a **bold** text.\n\n'
-            + 'a picture.\n\n![](https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/login/loginpage/images/bg_banner4273fb.png)\n\n'
-            + '```python\ndef foo():\n\tprint("ok")\n```\n\n'
-            + '```javascript\nfunction AVeryLongMethoooooooooooooooooooooooooooooooooooooooooooood() {\n\tconsole.log("ok")\n}\n```\n\n'
-            + 'a paragraphg with '
-            + 'inline code `{code: 0}`.\n\n'
-            + '> quote text\n> -- from Somebody\n\n'
-            + 'a huge paragraph: is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unc\n\n'
-            + 'another huge paragraph: is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unc\n\n'
-            + 'a table\n\n'
-            + '| Header 1 | Header 2 |\n'
-            + '| --- | --- |\n'
-            + '| Key 1 | Value 1 |\n'
-            + '| Key 2 | Value 2 |\n'
-            + '| Key 3 | Value 3 |\n\n'
-
-            + '## 中文标题2\n\n### 中文标题3\n\n段落\n\n- 列表项目 A\n- 列表项目 2\n\n'
-            + '文本和[链接](https://google.com)还有**加重字体**的测试。\n\n'
-            + '一个图片。\n\n![](https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/login/loginpage/images/bg_banner4273fb.png)\n\n'
-            + '```python\ndef foo():\n\tprint("ok")\n```\n\n'
-            + '```javascript\nfunction AVeryLongMethoooooooooooooooooooooooooooooooooooooooooooood() {\n\tconsole.log("ok")\n}\n```\n\n'
-            + '段落和内嵌的 '
-            + '一段代码 `{code: 0}`.\n\n'
-            + '> 引用文字 text\n> -- 鲁迅说的\n\n'
-            + '一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。 严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
-            + '又一大段文字: 飞强机外少全般我体自，安记平育数太维军动调，省号该内维用报坑。严几正儿较安增听连类八达，备因处门辰水兵述回。 断算表复风头历济，必条战影步写，后革A私车苏。 别许重现才二装叫矿它志，且六共能万后每所还维取做，最历建还扯群局克按扯。 只领养又义把整，便状基片利个，么刷方调动。\n\n'
-            + '## 注音符号\n\n'
-            + ' [W3C定义](http://www.w3.org/TR/ruby/)\n\n'
-            + '支持日语注音假名，小夜時雨【さ・よ・しぐれ】 和 汉语拼音 上海【Shàng・hǎi】\n\n'
-            + '用法有以下几种：\n\n'
-            + '```\n'
-            + '世界【せかい】\n'
-            + '世界{せかい}\n\n'
-            + '```\n\n'
-            + '世界{せかい}\n\n'
-            + '```\n'
-            + '小夜時雨【さ・よ・しぐれ】\n\n'
-            + '```\n\n'
-            + '小夜時雨【さ・よ・しぐれ】\n\n'
-            + '```\n'
-            + '食べる【たべる】\n'
-            + '食べる{たべる}\n\n'
-            + '```\n\n'
-            + '食べる{たべる}\n\n english【英文】 will not translated{fan yi}'
+          source: ''
         }
       },
       mounted () {
+        axios({
+          method: 'get',
+          url: './assets/default-content.md',
+        }).then(function (resp) {
+          editor.setValue(resp.data)
+        })
       },
       methods: {
         renderWeChat: function (source) {
