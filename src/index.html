@@ -74,7 +74,7 @@
       outline: 1px solid #ddd;
     }
     .preview ul, .preview ol {
-      padding-left: 20px !important;
+      padding-left: 40px !important;
     }
     .CodeMirror {
       height: 100%;
@@ -247,16 +247,17 @@
         'display': 'block',
       }),
       ol: COPY(BASE_BLOCK_STYLE, {
-        'margin-left': '0px',
+        'margin-left': '0',
         'padding-left': '0px'
       }),
       ul: COPY(BASE_BLOCK_STYLE, {
-        'margin-left': '0px',
+        'margin-left': '0',
         'padding-left': '0px',
         'list-style': 'circle',
       }),
       listitem: COPY(BASE_STYLE, {
-        'text-indent': '-20px',
+        'text-indent': '0px',
+        'display': 'block',
         'margin': '10px 10px',
       }),
       codespan: COPY(BASE_STYLE, {
@@ -341,7 +342,6 @@
         codeLines.push('<code><span class="code-snippet_outer">' + (line || '<br>') + '</span></code>')
         numbers.push('<li></li>')
       }
-      numbers.pop()
       var lang = infostring || ''
       return '<section class="code-snippet__fix code-snippet__js">'
         + '<ul class="code-snippet__line-index code-snippet__js">'+numbers.join('')+'</ul>'
@@ -353,13 +353,13 @@
       return '<code ' + S('codespan') + '>' + text + '</code>'
     }
     renderer.listitem = function (text) {
-      return '<p ' + S('listitem') + '><span style="margin-right: 10px">•</span>' + text + '</p>'
+      return '<span ' + S('listitem') + '><span style="margin-right: 10px">•</span>' + text + '</span>'
     }
     renderer.list = function (text, ordered, start) {
       if (!ordered) {
-        return '<ul ' + S('ul') + '>' + text + '</ul>'
+        return '<p ' + S('ul') + '>' + text + '</p>'
       }
-      return '<ol ' + S('ol') + '>' + text + '</ol>'
+      return '<p ' + S('ol') + '>' + text + '</p>'
     }
     renderer.image = function (href, title, text) {
       return '<img ' + S(ENV_STETCH_IMAGE ? 'image' : 'image_org') + ' src="' + href + '" title="'+title+'" alt="'+text+'"/>'
