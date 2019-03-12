@@ -293,11 +293,15 @@
       return '<img ' + S(ENV_STETCH_IMAGE ? 'image' : 'image_org') + ' src="' + href + '" title="'+title+'" alt="'+text+'"/>'
     }
     renderer.link = function (href, title, text) {
-      if (ENV_USE_REFERENCES) {
-        var ref = addFootnote(title || text, href)
-        return '<span ' + S('link') + '>' + text + '<sup>['+ref+']</sup></span>'; 
+      if (href.indexOf('https://mp.weixin.qq.com') === 0) {
+        return '<a href="' + href +'" title="' + (title || text) + '">' + text + '</a>'; 
       } else {
-        return '<a href="' + href +'" title="' + title + '" ' + S('link') + '>' + text + '</a>'; 
+        if (ENV_USE_REFERENCES) {
+          var ref = addFootnote(title || text, href)
+          return '<span ' + S('link') + '>' + text + '<sup>['+ref+']</sup></span>'; 
+        } else {
+          return '<a href="' + href +'" title="' + (title || text) + '" ' + S('link') + '>' + text + '</a>'; 
+        }
       }
     }
     renderer.strong = renderer.em = function (text) {
