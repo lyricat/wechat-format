@@ -35,14 +35,12 @@
 ```
 世界【せかい】
 世界{せかい}
-
 ```
 
 世界{せかい}
 
 ```
 小夜時雨【さ・よ・しぐれ】
-
 ```
 
 小夜時雨【さ・よ・しぐれ】
@@ -50,7 +48,6 @@
 ```
 食べる【たべる】
 食べる{たべる}
-
 ```
 
 食べる{たべる}\n\n english【英文】 will not translated{fan yi}'
@@ -88,7 +85,14 @@
 
 ![](https://res.wx.qq.com/mpres/zh_CN/htmledition/pages/login/loginpage/images/bg_banner4273fb.png)
 
-代码块，目前不支持高亮。但是其实能支持，就是有点费劲。欢迎去 [GitHub](https://github.com/lyricat/wechat-format "Wechat Format 源码") Pull Request。
+代码块，使用微信官方的高亮配色，在代码块标示语言即可。粘贴到公众号后，需要用鼠标点一下代码块，完成高亮。
+
+
+    ```cpp
+    你的代码
+    ```
+
+
 
 ```cpp
 #include <stdio.h>

@@ -84,6 +84,61 @@
       width: 100%;
       font-family: 'PingFang SC', BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
     }
+    /*wechat code block*/
+    .rich_media_content .code-snippet *, .rich_media_content .code-snippet__fix * {
+      max-width: 1000% !important;
+    }
+    .code-snippet__fix {
+      word-wrap: break-word !important;
+      ont-size: 14px;
+      margin: 10px 0;
+      display: block;
+      color: #333;
+      position: relative;
+      background-color: rgba(0,0,0,0.03);
+      border: 1px solid #f0f0f0;
+      border-radius: 2px;
+      display: flex;
+      line-height: 26px;
+    }
+    .code-snippet__fix .code-snippet__line-index {
+      counter-reset: line;
+      flex-shrink: 0;
+      height: 100%;
+      padding: 1em;
+      list-style-type: none;
+    }
+    .code-snippet__fix .code-snippet__line-index li {
+      list-style-type: none;
+      text-align: right;
+    }
+    .code-snippet__fix .code-snippet__line-index li::before {
+      min-width: 1.5em;
+      text-align: right;
+      left: -2.5em;
+      counter-increment: line;
+      content: counter(line);
+      display: inline;
+      color: rgba(0,0,0,0.15);
+    }
+    .code-snippet__fix pre {
+      overflow-x: auto;
+      padding: 1em;
+      padding-left: 1em;
+      padding-left: 0;
+      white-space: normal;
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+    }
+    .code-snippet__fix code {
+      text-align: left;
+      font-size: 14px;
+      display: block;
+      white-space: pre;
+      display: flex;
+      position: relative;
+      font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    }
   </style>
 </head>
 <body>
@@ -275,7 +330,24 @@
       return '<blockquote ' + S('blockquote') + '>' + text + '</blockquote>'
     }
     renderer.code = function (text, infostring) {
-      return '<pre ' + S('code') + '><code>' + text + '</code></pre>'
+      text = text.replace(/</g, "&lt;")
+      text = text.replace(/>/g, "&gt;")
+
+      var lines = text.split('\n')
+      var codeLines = []
+      var numbers = []
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i]
+        codeLines.push('<code><span class="code-snippet_outer">' + (line || '<br>') + '</span></code>')
+        numbers.push('<li></li>')
+      }
+      numbers.pop()
+      var lang = infostring || ''
+      return '<section class="code-snippet__fix code-snippet__js">'
+        + '<ul class="code-snippet__line-index code-snippet__js">'+numbers.join('')+'</ul>'
+        + '<pre class="code-snippet__js" data-lang="'+lang+'">' 
+          + codeLines.join('')
+        + '</pre></section>'
     }
     renderer.codespan = function (text, infostring) {
       return '<code ' + S('codespan') + '>' + text + '</code>'
