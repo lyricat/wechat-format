@@ -14,7 +14,7 @@
 
 我是 Lyric。如果你喜欢我的工具，可以：
 
-- 关注我的公众号 `imlyricw`
+- 关注我的公众号 `iamlyricw`
 - 关注我的博客 https://lyric.im
 - 给这个项目加星 https://github.com/lyricat/wechat-format
 
