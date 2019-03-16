@@ -57,6 +57,10 @@
     }
     .main-body {
     }
+    .preview-wrapper {
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+      margin-left: 10px;
+    }
     .main-section {
       display: flex;
       flex-direction: column;
@@ -78,7 +82,7 @@
     }
     .CodeMirror {
       height: 100%;
-      border-radius: 4px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
       font-size: 16px;
       padding: 20px;
       width: 100%;
@@ -147,30 +151,35 @@
       <el-header>
         <el-menu default-active="0" mode="horizontal" @select="handleSelect">
           <el-menu-item index="0">编辑器</el-menu-item>
-          <el-menu-item index="1">输出</el-menu-item>
-          <el-menu-item index="2">联系我</el-menu-item>
+          <el-menu-item index="1">联系我</el-menu-item>
         </el-menu>
       </el-header>
       <el-main class="main-body">
-        <section v-show="paneStats[0]" class="main-section">
-          <textarea
-            id="editor"
-            type="textarea"
-            placeholder="Your markdown here."
-            v-model="source">
-          </textarea>
-        </section>
-        <section v-show="paneStats[1]" class="main-section">
-          <div class="hint">全选复制或<a href="#" @click="copy" class="copy-button">点此复制</a>，然后在公众号编辑器粘贴</div>
-          <div class="preview" contenteditable="true">
-            <div id="output" v-html="output">
-            </div>
-          </div>
-        </section>
-        <section v-show="paneStats[2]" class="main-section">
+        <el-container v-show="paneStats[0]">
+          <el-aside width="50%">
+            <section class="main-section">
+              <textarea
+                id="editor"
+                type="textarea"
+                placeholder="Your markdown here."
+                v-model="source">
+              </textarea>
+            </section>
+          </el-aside>
+          <el-main class="preview-wrapper">
+            <section class="main-section">
+              <div class="hint">全选复制或<a href="#" @click="copy" class="copy-button">点此复制</a>，然后在公众号编辑器粘贴</div>
+              <div class="preview" contenteditable="true">
+                <div id="output" v-html="output">
+                </div>
+              </div>
+            </section>
+          </el-main>
+        </el-container>
+        <el-container v-show="paneStats[1]">
           <div v-html="aboutOutput">
           </div>
-        </section>
+        </el-container>
       </el-main>
     </el-container>
   </div>
@@ -398,7 +407,7 @@
             + '- 能把链接自动转换为参考文献索引，并且附在文字末尾\n\n'
             + '### 关于我\n\n'
             + '我是 Lyric。如果你喜欢我的工具，可以：\n\n'
-            + '- 关注我的公众号 `imlyricw`\n'
+            + '- 关注我的公众号 `iamlyricw`\n'
             + '  ![歌词经理的公众号](assets/images/qr.jpg)\n'
             + '- 关注我的博客 https://lyric.im\n'
             + '- 关注本工具的 Github https://github.com/lyricat/wechat-format\n'
@@ -409,11 +418,24 @@
         }
       },
       mounted () {
+        var self = this
         axios({
           method: 'get',
           url: './assets/default-content.md',
         }).then(function (resp) {
           editor.setValue(resp.data)
+        })
+        var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+          lineNumbers: false,
+          lineWrapping: true,
+          styleActiveLine: true,
+          theme: 'base16-light',
+          mode: 'text/x-markdown',
+        });
+        editor.on("change", function(cm, change) {
+          ENV_USE_REFERENCES = true
+          ENV_STETCH_IMAGE = true
+          self.output = self.renderWeChat(editor.getValue())
         })
       },
       methods: {
@@ -431,11 +453,6 @@
             return xi === parseInt(idx)
           })
           if (idx === "1") {
-            ENV_USE_REFERENCES = true
-            ENV_STETCH_IMAGE = true
-            this.output = this.renderWeChat(editor.getValue())
-          }
-          if (idx === "2") {
             ENV_USE_REFERENCES = false
             ENV_STETCH_IMAGE = false
             this.aboutOutput = this.renderWeChat(this.aboutSource)
@@ -470,13 +487,7 @@
     })
   </script>
   <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-      lineNumbers: false,
-      lineWrapping: true,
-      styleActiveLine: true,
-      theme: 'base16-light',
-      mode: 'text/x-markdown',
-    });
+
   </script>  
 </body>
 </html>
