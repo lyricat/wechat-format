@@ -3,6 +3,7 @@
 转化 Markdown 到给微信特制的 HTML
 
 使用在线版： https://lab.lyric.im/wxformat
+介绍：https://mp.weixin.qq.com/s/pn0LzyfgUj6rGUfVHUksjg
 
 ## 优点
 
