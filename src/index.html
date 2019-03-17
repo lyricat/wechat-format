@@ -8,15 +8,19 @@
   <link rel="shortcut icon" href="favicon.png"> 
   <link rel="apple-touch-icon-precomposed" href="favicon.png">
   <link rel="stylesheet" href="assets/css/vue-eleui.css">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <link rel="stylesheet" href="codemirror/codemirror.css">
   <link rel="stylesheet" href="codemirror/theme/base16-light.css">
   <link rel="stylesheet" href="codemirror/theme/duotone-light.css">
   <link rel="stylesheet" href="codemirror/theme/monokai.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  
   <script src="assets/scripts/axios.min.js"></script>
   <script src="assets/scripts/marked.min.js"></script>
   <script src="assets/scripts/vue.js"></script>
   <script src="assets/scripts/vue-eleui.js"></script>
   <script src="assets/scripts/FuriganaMD.js"></script>
+
   <script src="codemirror/codemirror.js"></script>
   <script src="codemirror/mode/markdown/markdown.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4178606-10"></script>
@@ -26,468 +30,73 @@
     gtag('js', new Date());
     gtag('config', 'UA-4178606-10');
   </script>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    a { text-decoration: none; color: #ff3502 }
-    input, button, textarea { font-family: inherit; }
-    h1, h2, h3, h4, h5, h6 { font-weight: normal; }
-    em { font-style: normal !important; }
-    html, body {
-      height: 100%;
-      font-family: 'PingFang SC', BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
-    }
-    .el-message__icon { display: none }
-    .container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .top {
-      height: 60px;
-    }
-    #editor {
-      height: 100%;
-      display: block;
-      border: none;
-      width: 100%;
-      padding: 10px;
-    }
-    section {
-      height: 100%;
-    }
-    .main-body {
-    }
-    .preview-wrapper {
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
-      margin-left: 10px;
-    }
-    .main-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .hint {
-      opacity: 0.6;
-      margin: 20px 0;
-    }
-    .preview {
-      margin: 0 -20px;
-      width: 375px;
-      padding: 20px;
-      font-size: 16px;
-      outline: 1px solid #ddd;
-    }
-    .preview ul, .preview ol {
-      padding-left: 40px !important;
-    }
-    .CodeMirror {
-      height: 100%;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
-      font-size: 16px;
-      padding: 20px;
-      width: 100%;
-      font-family: 'PingFang SC', BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
-    }
-    /*wechat code block*/
-    .rich_media_content .code-snippet *, .rich_media_content .code-snippet__fix * {
-      max-width: 1000% !important;
-    }
-    .code-snippet__fix {
-      word-wrap: break-word !important;
-      ont-size: 14px;
-      margin: 10px 0;
-      display: block;
-      color: #333;
-      position: relative;
-      background-color: rgba(0,0,0,0.03);
-      border: 1px solid #f0f0f0;
-      border-radius: 2px;
-      display: flex;
-      line-height: 26px;
-    }
-    .code-snippet__fix .code-snippet__line-index {
-      counter-reset: line;
-      flex-shrink: 0;
-      height: 100%;
-      padding: 1em;
-      list-style-type: none;
-    }
-    .code-snippet__fix .code-snippet__line-index li {
-      list-style-type: none;
-      text-align: right;
-    }
-    .code-snippet__fix .code-snippet__line-index li::before {
-      min-width: 1.5em;
-      text-align: right;
-      left: -2.5em;
-      counter-increment: line;
-      content: counter(line);
-      display: inline;
-      color: rgba(0,0,0,0.15);
-    }
-    .code-snippet__fix pre {
-      overflow-x: auto;
-      padding: 1em;
-      padding-left: 1em;
-      padding-left: 0;
-      white-space: normal;
-      flex: 1;
-      -webkit-overflow-scrolling: touch;
-    }
-    .code-snippet__fix code {
-      text-align: left;
-      font-size: 14px;
-      display: block;
-      white-space: pre;
-      display: flex;
-      position: relative;
-      font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
-    }
-  </style>
 </head>
 <body>
   <div id="app" class="container">
     <el-container>
-      <el-header>
-        <el-menu default-active="0" mode="horizontal" @select="handleSelect">
-          <el-menu-item index="0">编辑器</el-menu-item>
-          <el-menu-item index="1">联系我</el-menu-item>
-        </el-menu>
+      <el-header class="top">
+        <div class="logo">WeChat Format</div>
+        <el-form label-width="80px" size="mini" class="ctrl">
+          <el-form-item label="Fonts">
+            <el-select v-model="currentFont" size="mini" placeholder="选择字体" @change="fontChanged">
+              <el-option v-for="font in builtinFonts"  :style="{fontFamily: font.fonts}"
+                :key="font.value"
+                :label="font.label"
+                :value="font.fonts">
+                <span style="float: left">{{ font.label }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px" >Abc</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <el-button class="about" @click="aboutDialogVisible = true">关于</el-button>
       </el-header>
       <el-main class="main-body">
-        <el-container v-show="paneStats[0]">
-          <el-aside width="50%">
-            <section class="main-section">
-              <textarea
-                id="editor"
-                type="textarea"
-                placeholder="Your markdown here."
-                v-model="source">
-              </textarea>
-            </section>
-          </el-aside>
-          <el-main class="preview-wrapper">
-            <section class="main-section">
+        <el-row :gutter="10" class="main-section">
+          <el-col :span="12">
+            <textarea
+              id="editor"
+              type="textarea"
+              placeholder="Your markdown here."
+              v-model="source">
+            </textarea>
+          </el-col>
+          <el-col :span="12" class="preview-wrapper">
+            <section>
               <div class="hint">全选复制或<a href="#" @click="copy" class="copy-button">点此复制</a>，然后在公众号编辑器粘贴</div>
               <div class="preview" contenteditable="true">
                 <div id="output" v-html="output">
                 </div>
               </div>
             </section>
-          </el-main>
-        </el-container>
-        <el-container v-show="paneStats[1]">
-          <div v-html="aboutOutput">
-          </div>
-        </el-container>
+          </el-col>
+        </el-row>
       </el-main>
     </el-container>
+
+    <el-dialog title="关于" :visible.sync="aboutDialogVisible" width="30%" center>
+      <div>
+        <h3>优点</h3>
+        <p>能较好地排版</p>
+        <p>能解决 <code>ul</code> 和 <code>ol</code> 元素样式渲染时被微信编辑器重置的问题</p>
+        <p>能把链接自动转换为参考文献索引，并且附在文字末尾</p>
+        <p>&nbsp;</p>
+        <h3>关于我</h3>
+        <p>我是 Lyric。如果你喜欢我的工具，可以：</p>
+        <p>关注我的公众号 <code>iamlyricw</code>
+        </p>
+        <p>关注我的博客 <a href='https://lyric.im' target='_blank' class='url'>https://lyric.im</a></p>
+        <p>关注本工具的 <a href='https://github.com/lyricat/wechat-format' target='_blank' class='url'>Github</a></p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="aboutDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
-  <script>
-    var ENV_USE_REFERENCES = true
-    var ENV_STETCH_IMAGE = true
-    var COPY = function (base, extend) { return Object.assign({}, base, extend)}
 
-    var FONT_FAMILY = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
-    var FONT_FAMILY_MONO = "Operator Mono, Consolas, Monaco, Menlo, monospace"
-    var FONT_FAMILY_SERIF = "Optima-Regular, PingFangSC-light, PingFangTC-light, PingFang, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
-    var BASE_STYLE = {
-      'font-family': FONT_FAMILY_SERIF, 'text-align': 'left',
-      'color': '#3f3f3f',
-      'line-height': '1.5',
-      'font-size': '16px',
-    }
-    var BASE_BLOCK_STYLE = COPY(BASE_STYLE, {
-      'margin': '20px 10px'
-    })
-    var GRADIENT_STYLE = COPY(BASE_STYLE, {
-      'background-image': '-webkit-linear-gradient(left,#ff3502,#E67300)',
-      'background-image': 'linear-gradient(to right,#ff3502,#E67300)',
-      '-webkit-background-clip': 'text',
-      'background-clip': 'text',
-      '-webkit-text-fill-color': 'transparent'
-    })
-    var EM_STYLE = COPY(BASE_STYLE, {
-      'color': '#ff3502'
-    })
-    var styleMapping = {
-      h2: COPY(BASE_BLOCK_STYLE, {
-        'font-size': '140%',
-        'text-align': 'center',
-        'font-weight': 'normal',
-        'text-align': 'center',
-        'margin': '80px 10px 40px 10px'
-      }),
-      h3: COPY(BASE_BLOCK_STYLE, {
-        'font-weight': 'bold',
-        'font-size': '120%',
-        'margin': '40px 10px 20px 10px'
-      }),
-      p: COPY(BASE_BLOCK_STYLE, {
-        'margin': '10px 10px',
-        'line-height': '1.6'
-      }),
-      blockquote: COPY(BASE_BLOCK_STYLE, {
-        'color': 'rgb(91, 91, 91)',
-        'padding': '1px 0 1px 10px',
-        'background': 'rgba(158, 158, 158, 0.1)',
-        'border-left': '3px solid rgb(158,158,158)',
-        'font-family': FONT_FAMILY_SERIF,
-      }),
-      code: COPY(BASE_BLOCK_STYLE, {
-        'font-size': '80%',
-        'overflow': 'auto',
-        'color': '#333',
-        'font-family': FONT_FAMILY_MONO,
-        'background': 'rgb(247, 247, 247)',
-        'border-radius': '2px',
-        'padding': '10px',
-        'line-height': '1.3',
-        'border': '1px solid rgb(236,236,236)',
-        'margin': '20px 0',
-      }),
-      image: COPY(BASE_BLOCK_STYLE, {
-        'border-radius': '4px',
-        'display': 'block',
-        'margin': '20px auto',
-        'width': '100%',
-      }),
-      image_org: COPY(BASE_BLOCK_STYLE, {
-        'border-radius': '4px',
-        'display': 'block',
-      }),
-      ol: COPY(BASE_BLOCK_STYLE, {
-        'margin-left': '0',
-        'padding-left': '20px'
-      }),
-      ul: COPY(BASE_BLOCK_STYLE, {
-        'margin-left': '0',
-        'padding-left': '20px',
-        'list-style': 'circle',
-      }),
-      listitem: COPY(BASE_STYLE, {
-        'text-indent': '-20px',
-        'display': 'block',
-        'margin': '10px 10px',
-      }),
-      codespan: COPY(BASE_STYLE, {
-        'font-size': '90%',
-        'font-family': FONT_FAMILY_MONO,
-        'color': '#ff3502',
-        'background': '#f8f5ec',
-        'padding': '3px 5px',
-        'border-radius': '2px',
-      }),
-      link: COPY(EM_STYLE, {}),
-      strong: COPY(EM_STYLE, {}),
-      table: COPY(BASE_BLOCK_STYLE, {
-        'border-collapse': 'collapse',  
-        'margin': '20px 0',
-      }),
-      thead: COPY(BASE_STYLE, {
-        'background': 'rgba(0,0,0,0.05)',      
-      }),
-      td: COPY(BASE_STYLE, {
-        'font-size': '80%',
-        'border': '1px solid #dfdfdf',
-        'padding': '4px 8px',
-      }),
-      footnotes: COPY(BASE_BLOCK_STYLE, {
-        'margin': '10px 10px',
-        'font-size': '14px'
-      }),
-      footnote: COPY(BASE_STYLE, {
-        'font-size': '12px',
-      })
-    }
-    var footnotes = []
-    var footnoteindex = 0
-    var S = function (tokenName) {
-      var arr = []
-      var dict = styleMapping[tokenName]
-      for (const key in dict) {
-        arr.push(key + ':' + dict[key])
-      }
-      return 'style="' + arr.join(';') + '"'
-    }
-    var addFootnote = function (title, link) {
-      footnoteindex += 1
-      footnotes.push([footnoteindex, title, link])
-      return footnoteindex
-    }
-    var buildFootnotes = function () {
-      var footnoteArray = footnotes.map(function (x) {
-        if (x[1] === x[2]) {
-          return '<code style="font-size: 90%; opacity: 0.6;">[' + x[0] + ']</code>: <i>'  + x[1] +'</i><br/>'
-        }
-        return '<code style="font-size: 90%; opacity: 0.6;">[' + x[0] + ']</code> ' + x[1] + ': <i>'  + x[2] +'</i><br/>'
-      })
-      return '<h3 ' + S('h3') + '>References</h3><p ' + S('footnotes') + '>'  + footnoteArray.join('\n') + '</p>'
-    }
-    // renderer
-    var renderer = new marked.Renderer()
-    FuriganaMD.register(renderer);
-    renderer.heading = function (text, level) {
-      if (level < 3) {
-        return '<h2 ' + S('h2') + '>' + text + '</h2>'
-      } else {
-        return '<h3 ' + S('h3') + '>' + text + '</h3>'
-      }
-    }
-    renderer.paragraph = function (text) {
-      return '<p ' + S('p') + '>' + text + '</p>'
-    }
-    renderer.blockquote = function (text) {
-      return '<blockquote ' + S('blockquote') + '>' + text + '</blockquote>'
-    }
-    renderer.code = function (text, infostring) {
-      text = text.replace(/</g, "&lt;")
-      text = text.replace(/>/g, "&gt;")
+  <script src="assets/scripts/themes/default.js"></script>
+  <script src="assets/scripts/renderers/wx-renderer.js"></script>
+  <script src="assets/scripts/editor.js"></script>
 
-      var lines = text.split('\n')
-      var codeLines = []
-      var numbers = []
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i]
-        codeLines.push('<code><span class="code-snippet_outer">' + (line || '<br>') + '</span></code>')
-        numbers.push('<li></li>')
-      }
-      var lang = infostring || ''
-      return '<section class="code-snippet__fix code-snippet__js">'
-        + '<ul class="code-snippet__line-index code-snippet__js">'+numbers.join('')+'</ul>'
-        + '<pre class="code-snippet__js" data-lang="'+lang+'">' 
-          + codeLines.join('')
-        + '</pre></section>'
-    }
-    renderer.codespan = function (text, infostring) {
-      return '<code ' + S('codespan') + '>' + text + '</code>'
-    }
-    renderer.listitem = function (text) {
-      return '<span ' + S('listitem') + '><span style="margin-right: 10px;">•</span>' + text + '</span>'
-    }
-    renderer.list = function (text, ordered, start) {
-      if (!ordered) {
-        return '<p ' + S('ul') + '>' + text + '</p>'
-      }
-      return '<p ' + S('ol') + '>' + text + '</p>'
-    }
-    renderer.image = function (href, title, text) {
-      return '<img ' + S(ENV_STETCH_IMAGE ? 'image' : 'image_org') + ' src="' + href + '" title="'+title+'" alt="'+text+'"/>'
-    }
-    renderer.link = function (href, title, text) {
-      if (href.indexOf('https://mp.weixin.qq.com') === 0) {
-        return '<a href="' + href +'" title="' + (title || text) + '">' + text + '</a>'; 
-      } else {
-        if (ENV_USE_REFERENCES) {
-          var ref = addFootnote(title || text, href)
-          return '<span ' + S('link') + '>' + text + '<sup>['+ref+']</sup></span>'; 
-        } else {
-          return '<a href="' + href +'" title="' + (title || text) + '" ' + S('link') + '>' + text + '</a>'; 
-        }
-      }
-    }
-    renderer.strong = renderer.em = function (text) {
-      return '<strong ' + S('strong') + '>' + text + '</strong>'; 
-    }
-    renderer.table = function (header, body) {
-      return '<table ' + S('table') + '><thead ' + S('thead') + '>' + header + '</thead><tbody>' + body + '</tbody></table>'; 
-    }
-    renderer.tablecell = function (text, flags) {
-      return '<td ' + S('td') + '>' + text + '</td>'; 
-    }
-    var app = new Vue({
-      el: '#app',
-      data: function () {
-        return {
-          title: 'Markdown to WeChat Article',
-          paneStats: [true, false, false],
-          aboutSource: '### 优点\n\n'
-            + '- 能较好地排版\n'
-            + '- 能解决 `ul` 和 `ol` 元素样式渲染时被微信编辑器重置的问题\n'
-            + '- 能把链接自动转换为参考文献索引，并且附在文字末尾\n\n'
-            + '### 关于我\n\n'
-            + '我是 Lyric。如果你喜欢我的工具，可以：\n\n'
-            + '- 关注我的公众号 `iamlyricw`\n'
-            + '  ![歌词经理的公众号](assets/images/qr.jpg)\n'
-            + '- 关注我的博客 https://lyric.im\n'
-            + '- 关注本工具的 Github https://github.com/lyricat/wechat-format\n'
-            + '\n\n',
-          aboutOutput: '',
-          output: '',
-          source: ''
-        }
-      },
-      mounted () {
-        var self = this
-        axios({
-          method: 'get',
-          url: './assets/default-content.md',
-        }).then(function (resp) {
-          editor.setValue(resp.data)
-        })
-        var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
-          lineNumbers: false,
-          lineWrapping: true,
-          styleActiveLine: true,
-          theme: 'base16-light',
-          mode: 'text/x-markdown',
-        });
-        editor.on("change", function(cm, change) {
-          ENV_USE_REFERENCES = true
-          ENV_STETCH_IMAGE = true
-          self.output = self.renderWeChat(editor.getValue())
-        })
-      },
-      methods: {
-        renderWeChat: function (source) {
-          footnotes = []
-          footnoteindex = 0
-          var output = marked(source, { renderer: renderer })
-          if (footnotes.length) {
-            output += buildFootnotes()
-          }
-          return output
-        },
-        handleSelect: function (idx, path) {
-          this.paneStats = this.paneStats.map(function (x, xi) {
-            return xi === parseInt(idx)
-          })
-          if (idx === "1") {
-            ENV_USE_REFERENCES = false
-            ENV_STETCH_IMAGE = false
-            this.aboutOutput = this.renderWeChat(this.aboutSource)
-          }
-        },
-        copy: function () {
-          var clipboardDiv = document.getElementById('output')
-          clipboardDiv.focus();
-          window.getSelection().removeAllRanges();  
-          var range = document.createRange(); 
-          range.setStartBefore(clipboardDiv.firstChild);
-          range.setEndAfter(clipboardDiv.lastChild);
-          window.getSelection().addRange(range);  
-
-          try {
-            if (document.execCommand('copy')) {
-              this.$message({
-                message: '已复制到剪贴板', type: 'success'
-              })
-            } else {
-              this.$message({
-                message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
-              })
-            }
-          } catch (err) {
-            this.$message({
-              message: '未能复制到剪贴板，请全选后右键复制', type: 'warning'
-            })
-          }
-        }
-      }
-    })
-  </script>
-  <script>
-
-  </script>  
 </body>
 </html>
