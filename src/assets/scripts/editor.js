@@ -45,10 +45,8 @@ var app = new Vue({
   },
   methods: {
     renderWeChat: function (source) {
-      footnotes = []
-      footnoteindex = 0
       var output = marked(source, { renderer: this.wxRenderer.getRenderer() })
-      if (footnotes.length) {
+      if (this.wxRenderer.hasFootnotes()) {
         output += this.wxRenderer.buildFootnotes()
       }
       return output

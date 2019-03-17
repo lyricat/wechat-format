@@ -69,7 +69,14 @@ var WxRenderer = function (opts) {
     this.opts = COPY(this.opts, newOpts)
   }
 
+  this.hasFootnotes = function () {
+    return footnotes.length !== 0
+  }
+
   this.getRenderer = function () {
+    footnotes = []
+    footnoteindex = 0
+  
     styleMapping = this.buildTheme(this.opts.theme)
     var renderer = new marked.Renderer()
     FuriganaMD.register(renderer);
