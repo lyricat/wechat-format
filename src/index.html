@@ -77,15 +77,17 @@
     <el-dialog title="关于" :visible.sync="aboutDialogVisible" width="30%" center>
       <div>
         <h3>WeChat Format 有什么用？</h3>
-        <p>能较好地排版</p>
-        <p>能解决 <code>ul</code> 和 <code>ol</code> 元素样式渲染时被微信编辑器重置的问题</p>
-        <p>能把链接自动转换为参考文献索引，并且附在文字末尾</p>
+        <p>能较好地排版；</p>
+        <p>能解决 <code>ul</code> 和 <code>ol</code> 渲染时样式被微信编辑器重置的问题；</p>
+        <p>能把外部链接自动转为参考文献索引，并且附在文章末尾</p>
         <p>&nbsp;</p>
         <h3>关于我</h3>
         <p>我是 Lyric。如果你喜欢我的工具，可以：</p>
-        <p>关注我的公众号 "<code>iamlyricw</code>"</p>
-        <p>关注我的博客 <a href='https://lyric.im' target='_blank' class='url'>https://lyric.im</a></p>
-        <p>关注本工具的 <a href='https://github.com/lyricat/wechat-format' target='_blank' class='url'>Github</a></p>
+        <p>关注我的公众号 "<code>iamlyricw</code>"，<a href='https://lyric.im' target='_blank' class='url'>博客</a> 或 <a href='https://github.com/lyricat/wechat-format' target='_blank' class='url'>Github</a></p>
+        <p>
+          微信打赏我：
+          <img src="./assets/images/wechat_qrcode.jpg" style="width: 60%; display: block; margin: 0 auto;"/>
+        </p>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="aboutDialogVisible = false">确 定</el-button>
