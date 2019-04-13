@@ -117,13 +117,19 @@ var WxRenderer = function (opts) {
       return '<code ' + S('codespan') + '>' + text + '</code>'
     }
     renderer.listitem = function (text) {
-      return '<span ' + S('listitem') + '><span style="margin-right: 10px;">•</span>' + text + '</span>'
+      return '<span ' + S('listitem') + '><span style="margin-right: 10px;"><%s/></span>' + text + '</span>';
     }
     renderer.list = function (text, ordered, start) {
+      var segments = text.split('<%s/>');
       if (!ordered) {
-        return '<p ' + S('ul') + '>' + text + '</p>'
+        text = segments.join('•');
+        return '<p ' + S('ul') + '>' + text + '</p>';
       }
-      return '<p ' + S('ol') + '>' + text + '</p>'
+      text = segments[0];
+      for (var i = 1; i < segments.length; i++) {
+        text = text + i + '.' + segments[i];
+      }
+      return '<p ' + S('ol') + '>' + text + '</p>';
     }
     renderer.image = function (href, title, text) {
       return '<img ' + S(ENV_STETCH_IMAGE ? 'image' : 'image_org') + ' src="' + href + '" title="'+title+'" alt="'+text+'"/>'
