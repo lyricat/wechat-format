@@ -39,12 +39,23 @@
         <el-form label-width="80px" size="mini" class="ctrl">
           <el-form-item label="Fonts">
             <el-select v-model="currentFont" size="mini" placeholder="选择字体" @change="fontChanged">
-              <el-option v-for="font in builtinFonts"  :style="{fontFamily: font.fonts}"
+              <el-option v-for="font in builtinFonts"  :style="{fontFamily: font.value}"
                 :key="font.value"
                 :label="font.label"
-                :value="font.fonts">
+                :value="font.value">
                 <span style="float: left">{{ font.label }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px" >Abc</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Font Size">
+            <el-select v-model="currentSize" size="mini" placeholder="选择段落字体大小" @change="sizeChanged">
+              <el-option v-for="size in sizeOption"
+                :key="size.value"
+                :label="size.label"
+                :value="size.value">
+                <span style="float: left">{{ size.label }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px" >{{ size.desc }}</span>
               </el-option>
             </el-select>
           </el-form-item>
