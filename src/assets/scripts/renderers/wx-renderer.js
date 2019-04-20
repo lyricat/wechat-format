@@ -14,7 +14,8 @@ var WxRenderer = function (opts) {
   this.buildTheme = function (themeTpl) {
     var mapping = {}
     var base = COPY(themeTpl.BASE, {
-      'font-family': this.opts.fonts
+      'font-family': this.opts.fonts,
+      'font-size': this.opts.size
     })
     var base_block = COPY(base, {
       'margin': '20px 10px'

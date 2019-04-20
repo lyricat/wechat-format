@@ -2,8 +2,7 @@ var defaultTheme = {
   BASE: {
     'text-align': 'left',
     'color': '#3f3f3f',
-    'line-height': '1.5',
-    'font-size': '16px',
+    'line-height': '1.5'
   },
   BASE_BLOCK: {
     'margin': '20px 10px'
