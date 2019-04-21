@@ -59,6 +59,14 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="Themes">
+            <el-select v-model="currentTheme" size="mini" placeholder="选择主题样式" @change="themeChanged">
+              <el-option v-for="theme in themeOption" :key="theme.value" :label="theme.label" :value="theme.value">
+                <span style="float: left">{{ theme.label }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px">{{ theme.author }}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
         <el-button class="about" @click="aboutDialogVisible = true">关于</el-button>
       </el-header>
@@ -107,6 +115,7 @@
   </div>
 
   <script src="assets/scripts/themes/default.js"></script>
+  <script src="assets/scripts/themes/lupeng.js"></script>
   <script src="assets/scripts/renderers/wx-renderer.js"></script>
   <script src="assets/scripts/editor.js"></script>
 
