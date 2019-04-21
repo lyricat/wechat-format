@@ -88,11 +88,11 @@ var defaultTheme = {
       'color': '#ff3502'
     },
     table: {
-      'border-collapse': 'collapse',  
+      'border-collapse': 'collapse',
       'margin': '20px 0',
     },
     thead: {
-      'background': 'rgba(0,0,0,0.05)',      
+      'background': 'rgba(0,0,0,0.05)',
     },
     td: {
       'font-size': '80%',

@@ -137,7 +137,9 @@ var WxRenderer = function (opts) {
     }
     renderer.link = function (href, title, text) {
       if (href.indexOf('https://mp.weixin.qq.com') === 0) {
-        return '<a href="' + href +'" title="' + (title || text) + '">' + text + '</a>'; 
+        return '<a href="' + href +'" title="' + (title || text) + '" ' + S('wx_link') +'>' + text + '</a>'; 
+      }else if( href === text){
+        return text;
       } else {
         if (ENV_USE_REFERENCES) {
           var ref = addFootnote(title || text, href)
@@ -155,6 +157,9 @@ var WxRenderer = function (opts) {
     }
     renderer.tablecell = function (text, flags) {
       return '<td ' + S('td') + '>' + text + '</td>'; 
+    }
+    renderer.hr = function(){
+      return '<hr style="border-style: solid;border-width: 1px 0 0;border-color: rgba(0,0,0,0.1);-webkit-transform-origin: 0 0;-webkit-transform: scale(1, 0.5);transform-origin: 0 0;transform: scale(1, 0.5);">';
     }
     return renderer
   }

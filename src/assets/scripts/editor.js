@@ -20,6 +20,15 @@ var app = new Vue({
         { label: '17px', value: '17px', desc: '正常' },
         { label: '18px', value: '18px', desc: '稍大' }
       ],
+      currentTheme: 'default',
+      themeOption: [
+        { label: 'default', value: 'default', author: 'Lyric'},
+        { label: 'lupeng', value: 'lupeng', author: '鲁鹏'}
+      ],
+      styleThemes: {
+        default: defaultTheme,
+        lupeng: lupengTheme
+      },
       aboutDialogVisible: false
     }
   },
@@ -37,7 +46,7 @@ var app = new Vue({
     })
     // this.currentFont = this.builtinFonts[0],
     this.wxRenderer = new WxRenderer({
-      theme: defaultTheme,
+      theme: this.styleThemes.default,
       fonts: this.currentFont,
       size: this.currentSize
     })
@@ -56,7 +65,7 @@ var app = new Vue({
       }
       return output
     },
-    themeChanged: function () {
+    editorThemeChanged: function () {
       this.editor.setOption('theme', this.currentEditorTheme)
     },
     fontChanged: function (fonts) {
@@ -68,6 +77,14 @@ var app = new Vue({
     sizeChanged: function(size){
       this.wxRenderer.setOptions({
         size: size
+      })
+      this.refresh()
+    },
+    themeChanged: function(themeName){
+      var themeName = themeName;
+      var themeObject = this.styleThemes[themeName];
+      this.wxRenderer.setOptions({
+        theme: themeObject
       })
       this.refresh()
     },
