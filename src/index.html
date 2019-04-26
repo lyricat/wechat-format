@@ -14,29 +14,20 @@
   <link rel="stylesheet" href="codemirror/theme/duotone-light.css">
   <link rel="stylesheet" href="codemirror/theme/monokai.css">
   <link rel="stylesheet" href="assets/css/app.css">
-  
-  <script src="assets/scripts/axios.min.js"></script>
-  <script src="assets/scripts/marked.min.js"></script>
-  <script src="assets/scripts/vue.js"></script>
-  <script src="assets/scripts/vue-eleui.js"></script>
-  <script src="assets/scripts/FuriganaMD.js"></script>
-
-  <script src="codemirror/codemirror.js"></script>
-  <script src="codemirror/mode/markdown/markdown.js"></script>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4178606-10"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-4178606-10');
-  </script>
 </head>
 <body>
   <div id="app" class="container">
     <el-container>
       <el-header class="top">
-        <div class="logo">WeChat Format</div>
-        <el-form label-width="80px" size="mini" class="ctrl">
+        <div class="logo">{{ title }}</div>
+        <el-form size="mini" class="ctrl" :inline=true>
+          <el-form-item label="Editor Theme">
+            <el-select v-model="currentEditorTheme" size="mini" placeholder="选择字体" @change="editorThemeChanged">
+              <el-option v-for="editorTheme in editorThemes" :key="editorTheme.value" :label="editorTheme.label"
+                :value="editorTheme.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="Fonts">
             <el-select v-model="currentFont" size="mini" placeholder="选择字体" @change="fontChanged">
               <el-option v-for="font in builtinFonts"  :style="{fontFamily: font.value}"
@@ -114,10 +105,26 @@
     </el-dialog>
   </div>
 
+  <script src="assets/scripts/axios.min.js"></script>
+  <script src="assets/scripts/marked.min.js"></script>
+  <script src="assets/scripts/vue.js"></script>
+  <script src="assets/scripts/vue-eleui.js"></script>
+  <script src="assets/scripts/FuriganaMD.js"></script>
+  
+  <script src="codemirror/codemirror.js"></script>
+  <script src="codemirror/mode/markdown/markdown.js"></script>
+
   <script src="assets/scripts/themes/default.js"></script>
   <script src="assets/scripts/themes/lupeng.js"></script>
   <script src="assets/scripts/renderers/wx-renderer.js"></script>
   <script src="assets/scripts/editor.js"></script>
-
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4178606-10"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-4178606-10');
+  </script>
 </body>
 </html>
