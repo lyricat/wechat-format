@@ -21,7 +21,7 @@
       <el-header class="top">
         <div class="logo">{{ title }}</div>
         <el-form size="mini" class="ctrl" :inline=true>
-          <el-form-item label="Editor Theme">
+          <el-form-item label="Editor Themes">
             <el-select v-model="currentEditorTheme" size="mini" placeholder="选择字体" @change="editorThemeChanged">
               <el-option v-for="editorTheme in editorThemes" :key="editorTheme.value" :label="editorTheme.label"
                 :value="editorTheme.value">
