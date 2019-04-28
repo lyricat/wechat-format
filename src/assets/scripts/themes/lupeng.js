@@ -76,10 +76,10 @@ var lupengTheme = {
             'margin': '10px 10px',
         },
         codespan: {
-            'font-size': '0.9em',
+            'font-size': '0.8em',
             'color': '#d14',
             'background': '#fefefe',
-            'padding': '0px 5px',
+            'padding': '3px 5px 0px',
             'margin': '0px 2px',
             'border': '1px solid #ddd',
             'border-radius': '3px',

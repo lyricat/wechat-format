@@ -2,11 +2,15 @@ var app = new Vue({
   el: '#app',
   data: function () {
     return {
-      title: 'Markdown to WeChat Article',
+      title: 'WeChat Format',
       aboutOutput: '',
       output: '',
       source: '',
-      editorThemes: ['base16-light', 'monokai'],
+      editorThemes: [
+        { label: 'base16-light', value: 'base16-light' },
+        { label: 'duotone-light', value: 'duotone-light' },
+        { label: 'monokai', value: 'monokai' }
+      ],
       currentEditorTheme: 'base16-light',
       editor: null,
       builtinFonts: [
@@ -65,8 +69,8 @@ var app = new Vue({
       }
       return output
     },
-    editorThemeChanged: function () {
-      this.editor.setOption('theme', this.currentEditorTheme)
+    editorThemeChanged: function (editorTheme) {
+      this.editor.setOption('theme', editorTheme)
     },
     fontChanged: function (fonts) {
       this.wxRenderer.setOptions({
