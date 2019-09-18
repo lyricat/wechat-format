@@ -126,7 +126,6 @@ var app = new Vue({
       styleActiveLine: true,
       theme: this.currentEditorTheme,
       mode: 'text/x-markdown',
-      dragDrop:true,
     });
     this.editor.on("change", function(cm, change) {
       self.refresh()
