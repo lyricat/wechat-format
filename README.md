@@ -1,5 +1,11 @@
 # 微信公众号排版编辑器
 
+**I don't use WeChat Official anymore. This project is looking for new maintainers**
+
+**因为我不再使用微信公众号了，所以本项目正在寻觅新的维护者**
+
+## 简介
+
 转化 Markdown 到给微信特制的 HTML
 
 - 使用在线版： https://lab.lyric.im/wxformat
