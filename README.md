@@ -1,8 +1,8 @@
 # 微信公众号排版编辑器
 
-> This project is discontinued. Please use [Quail Markdown Tools](https://quail.ink/tools/markdown-to-wx/ "Quail 提供的在线转换工具") for better user experience.
+> This project is discontinued. Please use [Quail Markdown Tools](https://quaily.com/tools/markdown-to-wx/ "Quail 提供的在线转换工具") for better user experience.
 > 
-> 这个项目已经停止维护。建议使用[Quail 提供的在线转换工具](https://quail.ink/tools/markdown-to-wx/ "Quail 提供的在线转换工具")以获得更好的用户体验。
+> 这个项目已经停止维护。建议使用[Quail 提供的在线转换工具](https://quaily.com/tools/markdown-to-wx/ "Quail 提供的在线转换工具")以获得更好的用户体验。
 
 ## 简介
 
